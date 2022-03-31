@@ -69,6 +69,7 @@ namespace egyViewport2013
             //Grab a reference to the adornment layer that this adornment should be added to
             _adornmentLayer = view.GetAdornmentLayer("egyViewport2013");
 
+            this.onSizeChange();
             _view.ViewportHeightChanged += delegate { this.onSizeChange(); };
             _view.ViewportWidthChanged += delegate { this.onSizeChange(); };
         }
@@ -79,13 +80,14 @@ namespace egyViewport2013
             _adornmentLayer.RemoveAllAdornments();
 
             //stretch image size
+            double width = _view.ViewportWidth;
             double height = _view.ViewportHeight;
-            _image.Width = height / _imageAspect;
+            _image.Width = width;
             _image.Height = height;
 
             //Place the image in the right hand of the Viewport
-            Canvas.SetLeft(_image, _view.ViewportRight - (double)_image.Width);
-            Canvas.SetTop(_image, _view.ViewportTop);
+            Canvas.SetLeft(_image, _view.ViewportRight - _image.Width);
+            Canvas.SetTop(_image, _view.ViewportBottom - _image.Height);
 
             //add the image to the adornment layer and make it relative to the viewport
             _adornmentLayer.AddAdornment(AdornmentPositioningBehavior.ViewportRelative, null, null, _image, null);

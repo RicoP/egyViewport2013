@@ -16,7 +16,7 @@ public static class Logger {
         log.Flush();
     }
 
-    public static string GetPath(this IWpfTextView textView) {
+    public static string GetPath(IWpfTextView textView) {
         textView.TextBuffer.Properties.TryGetProperty(typeof(IVsTextBuffer), out IVsTextBuffer bufferAdapter);
 
         if (!(bufferAdapter is IPersistFileFormat persistFileFormat)) {
@@ -25,9 +25,7 @@ public static class Logger {
         persistFileFormat.GetCurFile(out string filePath, out _);
         return filePath;
     }
-
 }
-
 
 namespace egyViewport2013
 {
@@ -57,7 +55,10 @@ namespace egyViewport2013
         /// <param name="textView">The <see cref="IWpfTextView"/> upon which the adornment should be placed</param>
         public void TextViewCreated(IWpfTextView textView)
         {
-            Logger.Write("TextView Created");
+            string location = Logger.GetPath(textView);
+
+            
+            Logger.Write("TextView Created in location " + (location ?? "UNKNOWN"));
 
             new egyViewport2013(textView);
         }
