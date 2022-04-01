@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.TextManager.Interop;
 using Microsoft.VisualStudio.Utilities;
 
-public static class Logger {
+public static class Helper {
     static StreamWriter log = new StreamWriter(System.Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\blablub.log");
 
     public static void Write(string str) {
@@ -55,11 +55,6 @@ namespace egyViewport2013
         /// <param name="textView">The <see cref="IWpfTextView"/> upon which the adornment should be placed</param>
         public void TextViewCreated(IWpfTextView textView)
         {
-            string location = Logger.GetPath(textView);
-
-            
-            Logger.Write("TextView Created in location " + (location ?? "UNKNOWN"));
-
             new egyViewport2013(textView);
         }
     }
